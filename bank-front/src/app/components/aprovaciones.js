@@ -1,34 +1,30 @@
-// src/app/components/CreditApproval.js
-import React from 'react';
+import React, {useState, useEffect} from 'react'
 
-const CreditApproval = ({ cliente }) => {
-    const isEligible = () => {
-        const accountCreationDate = new Date(cliente.acc_creation_datetime);
-        const applicationDate = new Date(cliente.application_datetime);
-        const daysDifference = Math.ceil((applicationDate - accountCreationDate) / (1000 * 3600 * 24));
+export const AprobarCliente = ({ cliente, criterio }) => {
+    const [aprobado, setAprobado] = useState(false);
 
-        const maxDaysLate = cliente.max_days_late;
+    useEffect(() => {
+        const evaluarCliente = () => {
+            const accountCreationDate = new Date(cliente.acc_creation_datetime);
+            const applicationDate = new Date(cliente.application_datetime);
+            const daysDifference = (applicationDate - accountCreationDate) / (1000 * 60 * 60 * 24);
+            const maxDaysLate = cliente.max_days_late;
 
-        console.log('Fecha de creación de cuenta:', accountCreationDate);
-        console.log('Fecha de aplicación:', applicationDate);
-        console.log('Diferencia en días:', daysDifference);
-        console.log('Máximo días de retraso:', maxDaysLate);
+            const esAprobado =
+                (criterio.accountAge && daysDifference >= 365) &&
+                (criterio.daysSinceApplication && daysDifference <= 730) &&
+                (criterio.maxDaysLate && maxDaysLate <= 30);
 
-        if (!isNaN(accountCreationDate.getTime()) && !isNaN(applicationDate.getTime())) {
-            if (accountCreationDate > new Date('2020-05-01') &&
-                daysDifference >= 180 &&
-                maxDaysLate < 30) {
-                return true; // Apto para crédito
-            }
-        }
-        return false; // No apto para crédito
-    };
+            setAprobado(esAprobado);
+        };
+
+        evaluarCliente();
+    }, [cliente, criterio]);
 
     return (
-        <td>
-            {isEligible() ? 'Aprobado' : 'Rechazado'}
-        </td>
+        <span className={`px-2 py-1 rounded ${aprobado ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+            {aprobado ? 'Aprobado' : 'Rechazado'}
+        </span>
     );
 };
 
-export default CreditApproval;

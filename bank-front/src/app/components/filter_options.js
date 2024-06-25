@@ -1,31 +1,48 @@
-// src/app/components/FilterOptions.js
+'use client';
 import React from 'react';
 
 const FilterOptions = ({ filter, setFilter }) => {
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFilter(prevFilter => ({
-            ...prevFilter,
-            [name]: value
-        }));
+    const handleCheckboxChange = (event) => {
+        const { name, checked } = event.target;
+        setFilter({ ...filter, [name]: checked });
     };
 
     return (
-        <div className="w-1/3 p-4 bg-gray-200 rounded bg-amber-600">
-            <h2 className="text-xl font-bold mb-4">Opciones de Filtro</h2>
-            <div className="mb-4">
-                <label className="block text-sm font-bold mb-2">Buscar por ID:</label>
-                <input
-                    type="text"
-                    name="keyword"
-                    value={filter.keyword}
-                    onChange={handleInputChange}
-                    className="w-full p-2 border rounded text-black"
-                />
+        <div className="p-4 bg-gray-200 rounded shadow-md text-black">
+            <h2 className="text-xl font-bold mb-4">Select Evaluation Criteria</h2>
+            <div>
+                <label className="block text-black">
+                    <input
+                        type="checkbox"
+                        name="accountAge"
+                        checked={filter.accountAge}
+                        onChange={handleCheckboxChange}
+                    />
+                    Account Age (Account creation date before 2021-01-01)
+                </label>
+                <label className="block">
+                    <input
+                        type="checkbox"
+                        name="daysSinceApplication"
+                        checked={filter.daysSinceApplication}
+                        onChange={handleCheckboxChange}
+                    />
+                    Days Since Application
+                </label>
+                <label className="block">
+                    <input
+                        type="checkbox"
+                        name="maxDaysLate"
+                        checked={filter.maxDaysLate}
+                        onChange={handleCheckboxChange}
+                    />
+                    Maximum Days Late
+                </label>
             </div>
-            {/* Otros filtros según necesidad */}
         </div>
     );
 };
 
 export default FilterOptions;
+
+

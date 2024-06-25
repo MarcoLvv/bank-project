@@ -16,18 +16,39 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+/*body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
       to bottom,
-      transparent,
+      transparent
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+}*/
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+
+body {
+    @apply bg-black bg-opacity-80 text-black;
+}
+
+table {
+    @apply min-w-full shadow-md rounded my-6;
+}
+
+th, td {
+    @apply text-left py-2 px-4;
+}
+
+th {
+    @apply bg-blue-600 text-black;
+}
+
+tr:nth-child(even) {
+    @apply bg-gray-100;
 }
