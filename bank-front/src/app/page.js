@@ -3,10 +3,7 @@ import React, { useState, useEffect } from 'react';
 import TablaClientes from '@/app/components/clientes';
 import FilterOptions from '@/app/components/filter_options';
 import Statistics from '@/app/components/conteo';
-import {ClienteRepository} from '@/app/repositories/repositorio_cliente'
-//import { GetAllClientes } from '@/app/usecases/getclientes';
-import {PruebaClientes} from '@/app/test/prueba'
-import {AprobarCliente} from "@/app/components/aprovaciones";
+
 
 const ClientesPage = () => {
     const [clientes, setClientes] = useState([]);
